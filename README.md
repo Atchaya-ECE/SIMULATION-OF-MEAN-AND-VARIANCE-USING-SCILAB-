@@ -35,8 +35,77 @@ __PROCEDURE:__
 6.Verify the generated results
 
 __PROGRAM:__
+```
+clear;
+clc;
+
+// === Mean Value ===
+
+// Define function for Mean of X
+function X = f(x)
+    z = 3*(1 - x)^2;   // Marginal Probability Density Function
+    X = x * z;         // X = x * f(x)
+endfunction
+
+a = 0;
+b = 1;
+EX = intg(a, b, f);    // Mean value of X
+
+// Define function for Mean of Y
+function Y = c(y)
+    z = 3*(1 - y)^2;   // Marginal Probability Density Function
+    Y = y * z;
+endfunction
+
+EY = intg(a, b, c);    // Mean value of Y
+
+disp(EX, "i) Mean of X = ");
+disp(EY, "Mean of Y = ");
+
+// === Variance ===
+
+function X2 = g(x)
+    z = 3*(1 - x)^2;   // PDF
+    X2 = x^2 * z;      // x^2 * f(x)
+endfunction
+
+EX2 = intg(a, b, g);   // E[X^2]
+
+function Y2 = h(y)
+    z = 3*(1 - y)^2;   // PDF
+    Y2 = y^2 * z;
+endfunction
+
+EY2 = intg(a, b, h);   // E[Y^2]
+
+vX2 = EX2 - (EX)^2;    // Variance of X
+vY2 = EY2 - (EY)^2;    // Variance of Y
+
+disp(vX2, "ii) Variance of X = ");
+disp(vY2, "Variance of Y = ");
+
+// === Cross Correlation ===
+
+x = input("Type in the reference sequence (x): ");
+y = input("Type in the second sequence (y): ");
+
+n1 = max(size(y)) - 1;
+r = corr(x, y, n1);
+
+plot2d3(r);
+xtitle("Cross Correlation of x and y");
+xlabel("Lag");
+ylabel("Correlation Coefficient");
+```
 
 __OUTPUT GRAPH:__
+<img width="656" height="299" alt="image" src="https://github.com/user-attachments/assets/21d971ec-ae3a-4fbf-9c0b-416ae84f5c25" />
+
+<img width="760" height="597" alt="image" src="https://github.com/user-attachments/assets/97472310-3bda-4ced-b7d9-f2ea578baeb0" />
+
+# CALCULATION:
+![WhatsApp Image 2025-11-16 at 21 29 45_f9017501](https://github.com/user-attachments/assets/7fa5e5b7-f736-4ecc-822a-cbd63bf9f30e)
 
 __RESULT:__
+![WhatsApp Image 2025-11-16 at 21 31 30_ebe257af](https://github.com/user-attachments/assets/21b55044-19bf-4def-9e42-27d55ff65a89)
 
